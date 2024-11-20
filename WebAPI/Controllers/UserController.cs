@@ -20,10 +20,7 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> RegisterNewUser([FromBody] NewUser newUser)
         {
             bool isSuccesful = await _mediatrSender.Send(new CreateUserRequest(newUser));
-            if (isSuccesful)
-            {
-                return Ok("User created successfully");
-            }
+            if (isSuccesful) return Ok("User created successfully");
             return BadRequest("User already Exists");
         }
 
