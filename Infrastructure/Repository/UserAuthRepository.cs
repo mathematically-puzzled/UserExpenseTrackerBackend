@@ -43,7 +43,7 @@ namespace Infrastructure.Repository
 
         public async Task<bool> IsUserPresentAsync(User User)
         {
-            return await _context.UserTable.AnyAsync(u => u.EmailId == User.EmailId || u.Id == User.Id);
+            return await _context.UserTable.AnyAsync(u => u.EmailId == User.EmailId);
         }
 
         public async Task RegisterUserAsync(User User)
