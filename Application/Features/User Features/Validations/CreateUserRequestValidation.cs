@@ -1,11 +1,6 @@
 ﻿using Application.Features.User_Features.Commands;
 using Application.Models;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.User_Features.Validations
 {
