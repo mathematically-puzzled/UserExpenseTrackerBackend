@@ -19,7 +19,9 @@ namespace Application.Features.User_Features.Validations
                 .GreaterThanOrEqualTo(0).WithMessage("Bank balance must be defined or be 0");
 
             RuleFor(nu => nu.MobileNumber)
-                .NotEmpty().WithMessage("Please enter Mobile No.");
+                .NotEmpty().WithMessage("Please enter Mobile No.")
+                .Must(MobileNumber => MobileNumber.ToString().Length > 8 && MobileNumber.ToString().Length < 15)
+                .WithMessage("Enter Mobile Number in correct format");
         }
     }
 

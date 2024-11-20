@@ -19,7 +19,9 @@ namespace Application.Features.User_Features.Validations
                 .GreaterThanOrEqualTo(0).WithMessage("Bank balance must be defined or be 0");
 
             RuleFor(nu => nu.MobileNumber)
-                .NotEmpty().WithMessage("Please enter Mobile No.");
+                .NotEmpty().WithMessage("Please enter Mobile No.")
+                .Must(MobileNumber => MobileNumber.ToString().Length > 8 && MobileNumber.ToString().Length < 15)
+                .WithMessage("Enter Mobile Number in correct format");
 
             RuleFor(nu => nu.Password)
                 .NotEmpty().WithMessage("Password cannot be empty")
@@ -28,6 +30,10 @@ namespace Application.Features.User_Features.Validations
                 .Matches(@"[a-z]").WithMessage("Password must contain at least one lowercase letter")
                 .Matches(@"\d").WithMessage("Password must contain at least one number")
                 .Matches(@"[\W_]").WithMessage("Password must contain at least one special character");
+
+            RuleFor(nu => nu.EmailId)
+                .NotEmpty().WithMessage("Email cannot be empty")
+                .Matches("[@]").WithMessage("Must be in Email@something.com format");
         }
     }
     public class CreateUserRequestValidation : AbstractValidator<CreateUserRequest>
