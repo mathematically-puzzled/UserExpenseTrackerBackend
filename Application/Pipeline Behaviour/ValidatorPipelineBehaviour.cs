@@ -36,11 +36,11 @@ namespace Application.Pipeline_Behaviour
                     {
                         errors.Add(failure.ErrorMessage);
                     }
+
+                    var errorMessage = string.Join(Environment.NewLine, errors);
+                    throw new Exception($"Validation failed with the following errors:{Environment.NewLine}{errorMessage}");
                 }
 
-                var errorMessage = string.Join(Environment.NewLine, errors);
-
-                throw new Exception($"Validation failed with the following errors:{Environment.NewLine}{errorMessage}");
             }
 
             return await next();
