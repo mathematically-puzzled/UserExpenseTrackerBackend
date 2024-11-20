@@ -13,6 +13,14 @@ namespace Infrastructure.Repository
         {
             _context = context;
         }
+        public Task UserLoginAsync(string Username, string Password)
+        {
+            throw new NotImplementedException();
+        }
+        public Task ForgotPasswordAsync(string Username, long MobileNumber)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<bool> DeletUserAsync(Guid Id)
         {
@@ -24,11 +32,6 @@ namespace Infrastructure.Repository
                 return true;
             }
             return false;
-        }
-
-        public Task ForgotPasswordAsync(string Username, long MobileNumber)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<User> GetUserByIdAsync(Guid Id)
@@ -54,11 +57,6 @@ namespace Infrastructure.Repository
             _context.UserTable.Update(User);
             await _context.SaveChangesAsync();
             return true;
-        }
-
-        public Task UserLoginAsync(string Username, string Password)
-        {
-            throw new NotImplementedException();
         }
     }
 }
