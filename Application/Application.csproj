@@ -21,9 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\User\Commands\" />
-    <Folder Include="Features\User\Validations\" />
-    <Folder Include="Features\User\Queries\" />
+    <Folder Include="Features\User Features\Validations\" />
+    <Folder Include="Features\User Features\Queries\" />
   </ItemGroup>
 
 </Project>

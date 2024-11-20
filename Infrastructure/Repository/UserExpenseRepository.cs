@@ -1,21 +1,22 @@
 ﻿using Application.Models;
 using Application.Repository;
+using Domain;
 
 namespace Infrastructure.Repository
 {
     public class UserExpenseRepository : IUserExpenseRepository
     {
-        public Task AddNewExpenseAsync(NewExpense expense)
+        public Task AddNewExpenseAsync(Expenses expense)
         {
             throw new NotImplementedException();
         }
 
-        public Task AddNewExpenseTypeAsync(NewExpenseType expenseType)
+        public Task AddNewExpenseTypeAsync(ExpenseCategories expenseType)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteExpenseAsync(DeleteExpense expense)
+        public Task DeleteExpenseAsync(Expenses expense)
         {
             throw new NotImplementedException();
         }
@@ -25,7 +26,7 @@ namespace Infrastructure.Repository
             throw new NotImplementedException();
         }
 
-        public Task UpdateExpenseAsync(UpdateExpense expense)
+        public Task UpdateExpenseAsync(Expenses expense)
         {
             throw new NotImplementedException();
         }
