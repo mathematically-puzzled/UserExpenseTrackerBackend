@@ -24,11 +24,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.CurrencyType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Currency")
                         .HasColumnType("nvarchar(max)");
@@ -43,11 +41,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.ExpenseCategories", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ExpenseType")
                         .HasColumnType("nvarchar(max)");
@@ -67,11 +63,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Expenses", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
@@ -129,11 +123,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.UserSalt", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PasswordSalt")
                         .HasColumnType("nvarchar(max)");
