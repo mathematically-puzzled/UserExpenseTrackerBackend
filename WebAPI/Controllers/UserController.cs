@@ -2,6 +2,7 @@
 using Application.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Response_Model;
 
 namespace WebAPI.Controllers
 {
@@ -17,27 +18,63 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> RegisterNewUser([FromBody] NewUser newUser)
+        public async Task<GenericResponse> RegisterNewUser([FromBody] NewUser newUser)
         {
+            GenericResponse response = new();
             bool isSuccesful = await _mediatrSender.Send(new CreateUserRequest(newUser));
-            if (isSuccesful) return Ok("User created successfully");
-            return BadRequest("User already Exists");
+            if (isSuccesful)
+            {
+                response.Message = "User created successfully";
+                response.StatusCode = 200;
+                response.Data = null;
+
+                return response;
+            }
+            response.Message = "User already exists";
+            response.StatusCode = 500;
+            response.Data = null;
+
+            return response;
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUser user)
+        public async Task<GenericResponse> UpdateUser([FromBody] UpdateUser user)
         {
+            GenericResponse response = new();
             bool isSuccessful = await _mediatrSender.Send(new UpdateUserRequest(user));
-            if (isSuccessful) return Ok("User fields updated");
-            return BadRequest("User does not exist");
+            if (isSuccessful)
+            {
+                response.Message = "User fields updated";
+                response.StatusCode = 200;
+                response.Data = null;
+
+                return response;
+            }
+            response.Message = "User does not exist";
+            response.StatusCode = 500;
+            response.Data = null;
+
+            return response;
         }
 
         [HttpDelete("delete")]
-        public async Task<IActionResult> RemoveUser(Guid Id)
+        public async Task<GenericResponse> RemoveUser(Guid Id)
         {
+            GenericResponse response = new();
             bool isSuccessful = await _mediatrSender.Send(new DeleteUserRequest(Id));
-            if (isSuccessful) return Ok("User Deleted");
-            return BadRequest("User does not exist");
+            if (isSuccessful)
+            {
+                response.Message = "User deleted";
+                response.StatusCode = 200;
+                response.Data = null;
+
+                return response;
+            }
+            response.Message = "User does not exist";
+            response.StatusCode = 500;
+            response.Data = null;
+
+            return response;
         }
     }
 }

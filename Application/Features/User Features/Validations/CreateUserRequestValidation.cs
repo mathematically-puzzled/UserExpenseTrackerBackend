@@ -33,7 +33,7 @@ namespace Application.Features.User_Features.Validations
 
             RuleFor(nu => nu.EmailId)
                 .NotEmpty().WithMessage("Email cannot be empty")
-                .Matches("[@]").WithMessage("Must be in Email@something.com format");
+                .Matches("\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*").WithMessage("Must be in Email@something.com format");
         }
     }
     public class CreateUserRequestValidation : AbstractValidator<CreateUserRequest>
