@@ -50,15 +50,15 @@ namespace Infrastructure.Repository
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<bool> IsUserPresentAsync(string EmailId)
+        public async Task<bool> RegisterUserAsync(User User)
         {
-            return await _context.UserTable.AnyAsync(u => u.EmailId == EmailId);
-        }
-
-        public async Task RegisterUserAsync(User User)
-        {
+            bool IsUserInDb = await _context.UserTable.AsQueryable()
+                .AnyAsync(u => u.EmailId == User.EmailId);
+            if (IsUserInDb) return false;
+            User.JoinedDate = DateTime.Now;
             await _context.AddAsync(User);
             await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> UpdateUserAsync(User User)
