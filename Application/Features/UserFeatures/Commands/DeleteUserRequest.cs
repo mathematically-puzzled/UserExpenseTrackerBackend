@@ -1,7 +1,7 @@
 ﻿using Application.Repository;
 using MediatR;
 
-namespace Application.Features.User_Features.Commands
+namespace Application.Features.UserFeatures.Commands
 {
     public class DeleteUserRequest : IRequest<bool>
     {

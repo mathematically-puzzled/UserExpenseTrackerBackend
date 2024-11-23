@@ -1,8 +1,9 @@
-﻿using Application.Features.User_Features.Commands;
-using Application.Models;
+﻿using Application.Features.UserFeatures.Commands;
+using Application.Models.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Response_Model;
+using WebAPI.ResponseModel;
+using WebAPI.ResponseModel.Model;
 
 namespace WebAPI.Controllers
 {
@@ -11,70 +12,36 @@ namespace WebAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly ISender _mediatrSender;
+        GenericResponseMethod responseGenerator = new();
 
-        public UserController(ISender mediatrSender)
+        public UserController(ISender mediatrSender, GenericResponseMethod responseGenerator)
         {
             _mediatrSender = mediatrSender;
+            this.responseGenerator = responseGenerator;
         }
 
         [HttpPost("add")]
-        public async Task<GenericResponse> RegisterNewUser([FromBody] NewUser newUser)
+        public async Task<GenericResponseModel> RegisterNewUser([FromBody] NewUser newUser)
         {
-            GenericResponse response = new();
             bool isSuccesful = await _mediatrSender.Send(new CreateUserRequest(newUser));
-            if (isSuccesful)
-            {
-                response.Message = "User created successfully";
-                response.StatusCode = 200;
-                response.Data = null;
-
-                return response;
-            }
-            response.Message = "User already exists";
-            response.StatusCode = 500;
-            response.Data = null;
-
-            return response;
+            if (isSuccesful) return responseGenerator.GenerateResponseMethod(200, "User Created Successfully", null);
+            return responseGenerator.GenerateResponseMethod(500, "User already exists", null);
         }
 
         [HttpPut("update")]
-        public async Task<GenericResponse> UpdateUser([FromBody] UpdateUser user)
+        public async Task<GenericResponseModel> UpdateUser([FromBody] UpdateUser user)
         {
-            GenericResponse response = new();
             bool isSuccessful = await _mediatrSender.Send(new UpdateUserRequest(user));
-            if (isSuccessful)
-            {
-                response.Message = "User fields updated";
-                response.StatusCode = 200;
-                response.Data = null;
-
-                return response;
-            }
-            response.Message = "User does not exist";
-            response.StatusCode = 500;
-            response.Data = null;
-
-            return response;
+            if (isSuccessful) return responseGenerator.GenerateResponseMethod(200, "User fields updated", null);
+            return responseGenerator.GenerateResponseMethod(500, "User does not exists", null);
         }
 
         [HttpDelete("delete")]
-        public async Task<GenericResponse> RemoveUser(Guid Id)
+        public async Task<GenericResponseModel> RemoveUser(Guid Id)
         {
-            GenericResponse response = new();
             bool isSuccessful = await _mediatrSender.Send(new DeleteUserRequest(Id));
-            if (isSuccessful)
-            {
-                response.Message = "User deleted";
-                response.StatusCode = 200;
-                response.Data = null;
-
-                return response;
-            }
-            response.Message = "User does not exist";
-            response.StatusCode = 500;
-            response.Data = null;
-
-            return response;
+            if (isSuccessful) return responseGenerator.GenerateResponseMethod(200, "User deleted", null);
+            return responseGenerator.GenerateResponseMethod(500, "User does not exists", null);
         }
     }
 }

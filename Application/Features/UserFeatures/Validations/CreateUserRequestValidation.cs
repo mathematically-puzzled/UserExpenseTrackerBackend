@@ -1,5 +1,5 @@
-﻿using Application.Features.User_Features.Commands;
-using Application.Models;
+﻿using Application.Features.UserFeatures.Commands;
+using Application.Models.Users;
 using FluentValidation;
 
 namespace Application.Features.User_Features.Validations

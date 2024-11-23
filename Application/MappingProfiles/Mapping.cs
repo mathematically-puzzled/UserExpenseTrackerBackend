@@ -1,8 +1,8 @@
-﻿using Application.Models;
+﻿using Application.Models.Users;
 using AutoMapper;
 using Domain;
 
-namespace Application.Mapping_Profiles
+namespace Application.MappingProfiles
 {
     public class Mapping : Profile
     {

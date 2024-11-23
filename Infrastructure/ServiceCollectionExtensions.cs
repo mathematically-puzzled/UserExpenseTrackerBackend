@@ -16,7 +16,6 @@ namespace Infrastructure
         {
             services
                 .AddTransient<IUserAuthRepository, UserAuthRepository>()
-                .AddTransient<IUserExpenseRepository, UserExpenseRepository>()
                 .AddDbContext<ApplicationDbContext>(options => options
                 .UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 

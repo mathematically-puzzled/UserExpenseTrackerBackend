@@ -50,13 +50,6 @@ namespace Infrastructure.Repository
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<User> GetUserByEmailId(string EmailId)
-        {
-            return await _context.UserTable
-                .Where(p => p.EmailId == EmailId)
-                .FirstOrDefaultAsync();
-        }
-
         public async Task<bool> IsUserPresentAsync(string EmailId)
         {
             return await _context.UserTable.AnyAsync(u => u.EmailId == EmailId);

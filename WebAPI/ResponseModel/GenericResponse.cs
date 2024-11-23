@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace WebAPI.Response_Model
+﻿namespace WebAPI.ResponseModel
 {
     public class GenericResponse
     {

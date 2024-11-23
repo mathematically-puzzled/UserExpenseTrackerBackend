@@ -1,10 +1,10 @@
-﻿using Application.Models;
+﻿using Application.Models.Users;
 using Application.Pipeline_Behaviour.Contracts;
 using Application.Repository;
 using Domain;
 using MediatR;
 
-namespace Application.Features.User_Features.Commands
+namespace Application.Features.UserFeatures.Commands
 {
     public class UpdateUserRequest : IRequest<bool>, IValidate
     {

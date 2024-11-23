@@ -11,7 +11,6 @@ namespace Application.Repository
         Task<bool> UpdateUserAsync(User User);
         Task<bool> DeletUserAsync(Guid Id);
         Task<User> GetUserByIdAsync(Guid Id);
-        Task<User> GetUserByEmailId(string EmailId);
         Task<string> GenerateJWTToken(User User);
     }
 }
