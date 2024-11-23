@@ -31,7 +31,7 @@ namespace Application.Features.User_Features.Commands
         public async Task<bool> Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
             User User = _mapper.Map<User>(request.UserRequest);
-            bool isUserPresent = await _userAuthRepo.IsUserPresentAsync(User);
+            bool isUserPresent = await _userAuthRepo.IsUserPresentAsync(User.EmailId);
             if (!isUserPresent)
             {
                 User.JoinedDate = DateTime.Now;
