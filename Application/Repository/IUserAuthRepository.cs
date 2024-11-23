@@ -4,7 +4,7 @@ namespace Application.Repository
 {
     public interface IUserAuthRepository
     {
-        Task<string> UserLoginAsync(User User);
+        Task<User> UserLoginAsync(string UserEmail, string Password);
         Task<bool> RegisterUserAsync(User User);
         Task ForgotPasswordAsync(string Username, long MobileNumber);
         Task<bool> UpdateUserAsync(User User);

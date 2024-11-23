@@ -21,9 +21,17 @@ namespace Infrastructure.Repository
             _configuration = configuration;
         }
 
-        public Task<string> UserLoginAsync(User User)
+        public async Task<User> UserLoginAsync(string UserEmail, string Password)
         {
-            throw new NotImplementedException();
+            User UserInDb = await _context.UserTable.AsQueryable()
+                .Where(u => u.EmailId == UserEmail)
+                .FirstOrDefaultAsync();
+            if (UserInDb != null)
+            {
+                if (UserInDb.Password == Password) return UserInDb;
+                else return null;
+            }
+            return null;
         }
 
         public Task ForgotPasswordAsync(string Username, long MobileNumber)
@@ -81,8 +89,9 @@ namespace Infrastructure.Repository
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString())
             };
 
-            var Token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
+            var Token = new JwtSecurityToken(
                 _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
                 Claims,
                 expires: DateTime.Now.AddMinutes(120),
                 signingCredentials: Credentials);
