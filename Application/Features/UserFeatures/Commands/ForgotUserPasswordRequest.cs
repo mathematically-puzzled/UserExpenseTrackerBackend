@@ -42,7 +42,6 @@ namespace Application.Features.UserFeatures.Commands
             {
                 throw;
             }
-            throw new NotImplementedException();
         }
     }
 }
