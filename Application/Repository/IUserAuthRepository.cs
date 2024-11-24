@@ -6,7 +6,7 @@ namespace Application.Repository
     {
         Task<User> UserLoginAsync(string UserEmail, string Password);
         Task<bool> RegisterUserAsync(User User);
-        Task ForgotPasswordAsync(string Username, long MobileNumber);
+        Task<bool> ForgotPasswordAsync(User User);
         Task<bool> UpdateUserAsync(User User);
         Task<bool> DeletUserAsync(Guid Id);
         Task<User> GetUserByIdAsync(Guid Id);

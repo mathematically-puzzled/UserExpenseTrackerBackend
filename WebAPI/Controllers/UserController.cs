@@ -37,6 +37,22 @@ namespace WebAPI.Controllers
             }
         }
 
+        [HttpPost("forgor")]
+        [AllowAnonymous]
+        public async Task<GenericResponseModel> ForgotUserPassword(ForgotUser UserCredentials)
+        {
+            try
+            {
+                bool isActionSuccessful = await _mediatrSender.Send(new ForgotUserPasswordRequest(UserCredentials));
+                if (isActionSuccessful) return responseGenerator.GenerateResponseMethod(200, "User credentials updated successfully", null);
+                return responseGenerator.GenerateResponseMethod(500, "User credentials does not exists", null);
+            }
+            catch (Exception ex)
+            {
+                return responseGenerator.GenerateResponseMethod(500, ex.Message, null);
+            }
+        }
+
         [HttpPost("add")]
         [AllowAnonymous]
         public async Task<GenericResponseModel> RegisterNewUser([FromBody] NewUser newUser)

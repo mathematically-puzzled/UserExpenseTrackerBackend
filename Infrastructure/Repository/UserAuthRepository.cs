@@ -34,9 +34,23 @@ namespace Infrastructure.Repository
             return null;
         }
 
-        public Task ForgotPasswordAsync(string Username, long MobileNumber)
+        public async Task<bool> ForgotPasswordAsync(User User)
         {
-            throw new NotImplementedException();
+            User UserInDb = await _context.UserTable.AsQueryable()
+                .Where(u => u.EmailId == User.EmailId)
+                .FirstOrDefaultAsync();
+            if (UserInDb != null)
+            {
+                if (UserInDb.MobileNumber == User.MobileNumber)
+                {
+                    UserInDb.Password = User.Password;
+                    _context.UserTable.Update(UserInDb);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                throw new ArgumentException("User fields entered do not match in the backend");
+            }
+            return false;
         }
 
         public async Task<bool> DeletUserAsync(Guid Id)

@@ -11,6 +11,7 @@ namespace Application.MappingProfiles
             CreateMap<NewUser, User>();
             CreateMap<UpdateUser, User>();
             CreateMap<User, UserDto>();
+            CreateMap<ForgotUser, User>();
         }
     }
 }
