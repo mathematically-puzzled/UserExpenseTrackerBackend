@@ -1,6 +1,6 @@
-﻿namespace Domain
+﻿namespace Application.Models.Users
 {
-    public class User
+    public class UserDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -9,6 +9,7 @@
         public long BankBalance { get; set; }
         public string EmailId { get; set; }
         public long MobileNumber { get; set; }
-        public string Password { get; set; }
+        public int PasswordLength { get; set; }
+        public string BearerToken { get; set; }
     }
 }
