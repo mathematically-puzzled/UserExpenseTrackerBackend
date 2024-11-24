@@ -1,4 +1,5 @@
 ﻿using Application.Models.Users;
+using Application.Pipeline_Behaviour.Contracts;
 using Application.Repository;
 using AutoMapper;
 using Domain;
@@ -6,15 +7,13 @@ using MediatR;
 
 namespace Application.Features.UserFeatures.Commands
 {
-    public class LoginUserRequest : IRequest<UserDto>
+    public class LoginUserRequest : IRequest<UserDto>, IValidate
     {
-        public string UserEmail { get; set; }
-        public string Password { get; set; }
+        public LoginUser UserCredentials { get; set; }
 
-        public LoginUserRequest(string userEmail, string password)
+        public LoginUserRequest(LoginUser userCredentials)
         {
-            UserEmail = userEmail;
-            Password = password;
+            UserCredentials = userCredentials;
         }
     }
 
@@ -28,9 +27,10 @@ namespace Application.Features.UserFeatures.Commands
             _userRepo = userRepo;
             _mapper = mapper;
         }
+
         public async Task<UserDto> Handle(LoginUserRequest request, CancellationToken cancellationToken)
         {
-            User UserInDb = await _userRepo.UserLoginAsync(request.UserEmail, request.Password);
+            User UserInDb = await _userRepo.UserLoginAsync(request.UserCredentials.UserEmail, request.UserCredentials.Password);
             if (UserInDb != null)
             {
                 UserDto UserDTO = _mapper.Map<UserDto>(UserInDb);

@@ -38,7 +38,7 @@ namespace Application.Pipeline_Behaviour
                     }
 
                     var errorMessage = string.Join(Environment.NewLine, errors);
-                    throw new Exception($"Validation failed with the following errors:{Environment.NewLine}{errorMessage}");
+                    throw new Exception(errorMessage);
                 }
 
             }
