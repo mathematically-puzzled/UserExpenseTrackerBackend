@@ -1,4 +1,5 @@
 ﻿using Application.Models.Users;
+using Application.Pipeline_Behaviour.Contracts;
 using Application.Repository;
 using AutoMapper;
 using Domain;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.UserFeatures.Commands
 {
-    public class ForgotUserPasswordRequest : IRequest<bool>
+    public class ForgotUserPasswordRequest : IRequest<bool>, IValidate
     {
         public ForgotUser UserCredentials { get; set; }
 
