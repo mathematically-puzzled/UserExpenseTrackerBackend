@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
             {
                 bool isActionSuccessful = await _mediatrSender.Send(new ForgotUserPasswordRequest(UserCredentials));
                 if (isActionSuccessful) return responseGenerator.GenerateResponseMethod(200, "User credentials updated successfully", null);
-                return responseGenerator.GenerateResponseMethod(500, "User credentials does not exists", null);
+                return responseGenerator.GenerateResponseMethod(404, "User credentials does not exists", null);
             }
             catch (Exception ex)
             {
@@ -87,7 +87,7 @@ namespace WebAPI.Controllers
             }
             catch (ArgumentException ex)
             {
-                return responseGenerator.GenerateResponseMethod(500, ex.Message, null);
+                return responseGenerator.GenerateResponseMethod(404, ex.Message, null);
             }
             catch (Exception ex)
             {
@@ -101,7 +101,7 @@ namespace WebAPI.Controllers
         {
             bool isSuccessful = await _mediatrSender.Send(new DeleteUserRequest(Id));
             if (isSuccessful) return responseGenerator.GenerateResponseMethod(200, "User deleted", null);
-            return responseGenerator.GenerateResponseMethod(500, "User does not exists", null);
+            return responseGenerator.GenerateResponseMethod(404, "User does not exists", null);
         }
     }
 }
