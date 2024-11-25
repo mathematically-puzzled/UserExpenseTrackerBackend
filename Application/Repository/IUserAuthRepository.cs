@@ -1,12 +1,15 @@
-﻿using Application.Models;
+﻿using Domain;
 
 namespace Application.Repository
 {
     public interface IUserAuthRepository
     {
-        Task UserLogin(string Username, string Password);
-        Task RegisterUser(NewUser User);
-        Task ForgotPassword(string Username, long MobileNumber);
-        Task IsUserPresent(string Username);
+        Task<User> UserLoginAsync(string UserEmail, string Password);
+        Task<bool> RegisterUserAsync(User User);
+        Task<bool> ForgotPasswordAsync(User User);
+        Task<bool> UpdateUserAsync(User User);
+        Task<bool> DeletUserAsync(Guid Id);
+        Task<User> GetUserByIdAsync(Guid Id);
+        Task<string> GenerateJWTToken(User User);
     }
 }
