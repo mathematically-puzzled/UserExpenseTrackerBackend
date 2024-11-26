@@ -5,6 +5,7 @@ using MediatR;
 namespace Application.Pipeline_Behaviour
 {
     public class ValidatorPipelineBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        // Conditions to Run Pipeline behaviour.
         where TRequest : IRequest<TResponse>, IValidate
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
@@ -36,7 +37,7 @@ namespace Application.Pipeline_Behaviour
                     {
                         errors.Add(failure.ErrorMessage);
                     }
-
+                    // Not required but using the Enviornment.NewLine to split when catching the exception.
                     var errorMessage = string.Join(Environment.NewLine, errors);
                     throw new Exception(errorMessage);
                 }

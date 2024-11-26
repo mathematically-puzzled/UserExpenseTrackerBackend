@@ -6,6 +6,9 @@ using MediatR;
 
 namespace Application.Features.UserFeatures.Commands
 {
+    /// <summary>
+    /// Method to recieve Request and Initialize constructor.
+    /// </summary>
     public class UpdateUserRequest : IRequest<bool>, IValidate
     {
         public UpdateUser UserRequest { get; set; }
@@ -16,6 +19,10 @@ namespace Application.Features.UserFeatures.Commands
         }
     }
 
+    /// <summary>
+    /// No IMapper, Manual Mapping since it replaces Values that are empty 
+    /// with empty values.
+    /// </summary>
     public class UpdateUserRequestHandler : IRequestHandler<UpdateUserRequest, bool>
     {
         private readonly IUserAuthRepository _userRepo;
