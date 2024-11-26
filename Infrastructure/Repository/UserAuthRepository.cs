@@ -21,6 +21,14 @@ namespace Infrastructure.Repository
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Method to login user.
+        /// </summary>
+        /// <param name="UserEmail"></param>
+        /// <param name="Password"></param>
+        /// <returns>
+        /// Returns User when found, returns null when not found.
+        /// </returns>
         public async Task<User> UserLoginAsync(string UserEmail, string Password)
         {
             User UserInDb = await _context.UserTable.AsQueryable()
@@ -34,6 +42,14 @@ namespace Infrastructure.Repository
             return null;
         }
 
+        /// <summary>
+        /// Method to reset Password for User.
+        /// </summary>
+        /// <param name="User"></param>
+        /// <returns>
+        /// Returns True when record Updated, false if not.
+        /// </returns>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<bool> ForgotPasswordAsync(User User)
         {
             User UserInDb = await _context.UserTable.AsQueryable()
@@ -53,6 +69,13 @@ namespace Infrastructure.Repository
             return false;
         }
 
+        /// <summary>
+        /// Method to delete User Async.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>
+        /// If UserInDb return True then deleted; false if not present in Db
+        /// </returns>
         public async Task<bool> DeletUserAsync(Guid Id)
         {
             User UserInDb = await GetUserByIdAsync(Id);
@@ -65,6 +88,11 @@ namespace Infrastructure.Repository
             return false;
         }
 
+        /// <summary>
+        /// Method to Fetch User by Id.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>User from Table</returns>
         public async Task<User> GetUserByIdAsync(Guid Id)
         {
             return await _context.UserTable
@@ -72,6 +100,14 @@ namespace Infrastructure.Repository
                 .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Method to Register User in Database. Puts DateTime.Now so that User has no control
+        /// over it.
+        /// </summary>
+        /// <param name="User"></param>
+        /// <returns>
+        /// Returns True when record added; False when User is already in Db.
+        /// </returns>
         public async Task<bool> RegisterUserAsync(User User)
         {
             bool IsUserInDb = await _context.UserTable.AsQueryable()
@@ -83,6 +119,11 @@ namespace Infrastructure.Repository
             return true;
         }
 
+        /// <summary>
+        /// Method to Update User Async.
+        /// </summary>
+        /// <param name="User"></param>
+        /// <returns></returns>
         public async Task<bool> UpdateUserAsync(User User)
         {
             _context.UserTable.Update(User);
@@ -90,6 +131,13 @@ namespace Infrastructure.Repository
             return true;
         }
 
+        /// <summary>
+        /// Generate JWT Token for the said User. Add necessary claims for the User.
+        /// </summary>
+        /// <param name="User"></param>
+        /// <returns>
+        /// Bearer Token
+        /// </returns>
         public Task<string> GenerateJWTToken(User User)
         {
             var SecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));

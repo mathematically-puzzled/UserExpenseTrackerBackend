@@ -7,6 +7,9 @@ using MediatR;
 
 namespace Application.Features.UserFeatures.Commands
 {
+    /// <summary>
+    /// Method to recieve Request and Initialize constructor.
+    /// </summary>
     public class ForgotUserPasswordRequest : IRequest<bool>, IValidate
     {
         public ForgotUser UserCredentials { get; set; }
@@ -17,6 +20,10 @@ namespace Application.Features.UserFeatures.Commands
         }
     }
 
+    /// <summary>
+    /// Maps UserCredentials over User. Has IValidate interface,Pipeline Validate behaviour 
+    /// is expected here.
+    /// </summary>
     public class ForgotUserPasswordRequestHandler : IRequestHandler<ForgotUserPasswordRequest, bool>
     {
         private readonly IMapper _mapper;

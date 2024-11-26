@@ -3,6 +3,9 @@ using MediatR;
 
 namespace Application.Features.UserFeatures.Commands
 {
+    /// <summary>
+    /// Method to recieve Request and Initialize constructor.
+    /// </summary>
     public class DeleteUserRequest : IRequest<bool>
     {
         public Guid Id { get; set; }
@@ -13,6 +16,9 @@ namespace Application.Features.UserFeatures.Commands
         }
     }
 
+    /// <summary>
+    /// Deletes the User by referring the UserAuthRepo
+    /// </summary>
     public class DeleteUserRequestHandler : IRequestHandler<DeleteUserRequest, bool>
     {
         private readonly IUserAuthRepository _userRepo;
