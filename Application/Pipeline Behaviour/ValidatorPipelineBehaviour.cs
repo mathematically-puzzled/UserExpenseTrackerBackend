@@ -39,7 +39,7 @@ namespace Application.Pipeline_Behaviour
                     }
                     // Not required but using the Enviornment.NewLine to split when catching the exception.
                     var errorMessage = string.Join(Environment.NewLine, errors);
-                    throw new Exception(errorMessage);
+                    throw new ValidationException(errorMessage);
                 }
 
             }

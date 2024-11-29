@@ -8,7 +8,7 @@ namespace Application.Repository
         Task<bool> RegisterUserAsync(User User);
         Task<bool> ForgotPasswordAsync(User User);
         Task<bool> UpdateUserAsync(User User);
-        Task<bool> DeletUserAsync(Guid Id);
+        Task DeletUserAsync(Guid Id);
         Task<User> GetUserByIdAsync(Guid Id);
         Task<string> GenerateJWTToken(User User);
     }

@@ -43,7 +43,6 @@ namespace Application.Features.UserFeatures.Commands
                 bool isActionSuccessfull = await _userRepo.ForgotPasswordAsync(UserInDb);
                 if (isActionSuccessfull) return true;
                 else return false;
-                throw new Exception();
             }
             catch (Exception)
             {

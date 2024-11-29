@@ -6,7 +6,7 @@ namespace Application.Features.UserFeatures.Commands
     /// <summary>
     /// Method to recieve Request and Initialize constructor.
     /// </summary>
-    public class DeleteUserRequest : IRequest<bool>
+    public class DeleteUserRequest : IRequest
     {
         public Guid Id { get; set; }
 
@@ -19,7 +19,7 @@ namespace Application.Features.UserFeatures.Commands
     /// <summary>
     /// Deletes the User by referring the UserAuthRepo
     /// </summary>
-    public class DeleteUserRequestHandler : IRequestHandler<DeleteUserRequest, bool>
+    public class DeleteUserRequestHandler : IRequestHandler<DeleteUserRequest>
     {
         private readonly IUserAuthRepository _userRepo;
 
@@ -28,11 +28,18 @@ namespace Application.Features.UserFeatures.Commands
             _userRepo = userRepo;
         }
 
-        public async Task<bool> Handle(DeleteUserRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteUserRequest request, CancellationToken cancellationToken)
         {
-            bool isSuccessful = await _userRepo.DeletUserAsync(request.Id);
-            if (isSuccessful) return true;
-            return false;
+            try
+            {
+                await _userRepo.DeletUserAsync(request.Id);
+                return Unit.Value;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

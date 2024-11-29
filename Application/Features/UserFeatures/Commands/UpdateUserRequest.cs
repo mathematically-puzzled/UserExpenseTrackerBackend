@@ -35,17 +35,14 @@ namespace Application.Features.UserFeatures.Commands
         public async Task<bool> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
         {
             User User = await _userRepo.GetUserByIdAsync(request.UserRequest.Id);
-            if (User != null)
-            {
-                User.Name = request.UserRequest.Name;
-                User.Currency = request.UserRequest.Currency;
-                User.BankBalance = request.UserRequest.BankBalance;
-                User.MobileNumber = request.UserRequest.MobileNumber;
+            
+            User.Name = request.UserRequest.Name;
+            User.Currency = request.UserRequest.Currency;
+            User.BankBalance = request.UserRequest.BankBalance;
+            User.MobileNumber = request.UserRequest.MobileNumber;
 
-                await _userRepo.UpdateUserAsync(User);
-                return true;
-            }
-            return false;
+            await _userRepo.UpdateUserAsync(User);
+            return true;
         }
     }
 }

@@ -31,15 +31,22 @@ namespace Infrastructure.Repository
         /// </returns>
         public async Task<User> UserLoginAsync(string UserEmail, string Password)
         {
-            User UserInDb = await _context.UserTable.AsQueryable()
-                .Where(u => u.EmailId == UserEmail)
-                .FirstOrDefaultAsync();
-            if (UserInDb != null)
+            try
             {
-                if (UserInDb.Password == Password) return UserInDb;
-                else return null;
+                User UserInDb = await _context.UserTable.AsQueryable()
+                                .Where(u => u.EmailId == UserEmail)
+                                .FirstOrDefaultAsync();
+                if (UserInDb != null)
+                {
+                    if (UserInDb.Password == Password) return UserInDb;
+                    throw new Exception("UserEmail and Passwords do not match.");
+                }
+                throw new Exception("User does not exist in the Database");
             }
-            return null;
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -64,7 +71,7 @@ namespace Infrastructure.Repository
                     await _context.SaveChangesAsync();
                     return true;
                 }
-                throw new ArgumentException("User fields entered do not match in the backend");
+                throw new ArgumentException("User fields entered do not match in the backend.");
             }
             return false;
         }
@@ -74,18 +81,21 @@ namespace Infrastructure.Repository
         /// </summary>
         /// <param name="Id"></param>
         /// <returns>
-        /// If UserInDb return True then deleted; false if not present in Db
+        /// Returns exception if User not found or 200 if User Deleted.
         /// </returns>
-        public async Task<bool> DeletUserAsync(Guid Id)
+        /// <exception cref="Exception"/>
+        public async Task DeletUserAsync(Guid Id)
         {
-            User UserInDb = await GetUserByIdAsync(Id);
-            if (UserInDb != null)
+            try
             {
+                User UserInDb = await GetUserByIdAsync(Id);
                 _context.UserTable.Remove(UserInDb);
                 await _context.SaveChangesAsync();
-                return true;
             }
-            return false;
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -95,9 +105,11 @@ namespace Infrastructure.Repository
         /// <returns>User from Table</returns>
         public async Task<User> GetUserByIdAsync(Guid Id)
         {
-            return await _context.UserTable
+            User UserinDb = await _context.UserTable
                 .Where(p => p.Id == Id)
                 .FirstOrDefaultAsync();
+            if (UserinDb == null) throw new Exception("User not found in the Database");
+            return UserinDb;
         }
 
         /// <summary>
@@ -110,13 +122,20 @@ namespace Infrastructure.Repository
         /// </returns>
         public async Task<bool> RegisterUserAsync(User User)
         {
-            bool IsUserInDb = await _context.UserTable.AsQueryable()
+            try
+            {
+                bool IsUserInDb = await _context.UserTable.AsQueryable()
                 .AnyAsync(u => u.EmailId == User.EmailId);
-            if (IsUserInDb) return false;
-            User.JoinedDate = DateTime.Now;
-            await _context.AddAsync(User);
-            await _context.SaveChangesAsync();
-            return true;
+                if (IsUserInDb) throw new Exception("User already registered with this Email Address.");
+                User.JoinedDate = DateTime.Now;
+                await _context.AddAsync(User);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
