@@ -38,10 +38,16 @@ namespace Application.Features.UserFeatures.Commands
 
         public async Task<bool> Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
-            User User = _mapper.Map<User>(request.UserRequest);
-            bool IsUserRegistered = await _userAuthRepo.RegisterUserAsync(User);
-            if (IsUserRegistered) return true;
-            return false;
+            try
+            {
+                User User = _mapper.Map<User>(request.UserRequest);
+                bool IsUserRegistered = await _userAuthRepo.RegisterUserAsync(User);
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

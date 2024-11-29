@@ -1,5 +1,6 @@
 ﻿using Application.Features.UserFeatures.Commands;
 using Application.Models.Users;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,12 +39,15 @@ namespace WebAPI.Controllers
             try
             {
                 object UserDto = await _mediatrSender.Send(new LoginUserRequest(Credentials));
-                if (UserDto != null) return responseGenerator.GenerateResponseMethod(200, "User logged in successfully", UserDto);
-                throw new Exception();
+                return responseGenerator.GenerateResponseMethod(200, "User logged in successfully", UserDto);
             }
-            catch (Exception ex)
+            catch (ValidationException ex)
             {
-                return responseGenerator.GenerateResponseMethod(500, "One or more validation error(s) occured", ex.Message.Split(Environment.NewLine));
+                return responseGenerator.GenerateResponseMethod(400, "One or more validation error(s) occured", ex.Message.Split(Environment.NewLine));
+            }
+            catch(Exception ex)
+            {
+                return responseGenerator.GenerateResponseMethod(500, ex.Message, null);
             }
         }
 
@@ -86,18 +90,16 @@ namespace WebAPI.Controllers
         {
             try
             {
-                bool isSuccesful = await _mediatrSender.Send(new CreateUserRequest(newUser));
-                if (isSuccesful) return responseGenerator.GenerateResponseMethod(200, "User Created Successfully", null);
-                else throw new ArgumentException("User already exists");
-                throw new Exception();
+                await _mediatrSender.Send(new CreateUserRequest(newUser));
+                return responseGenerator.GenerateResponseMethod(200, "User Created Successfully", null);
             }
-            catch (ArgumentException ex)
+            catch (ValidationException ex)
             {
-                return responseGenerator.GenerateResponseMethod(500, ex.Message, null);
+                return responseGenerator.GenerateResponseMethod(400, "One or more validation error(s) occured", ex.Message.Split(Environment.NewLine));
             }
             catch (Exception ex)
             {
-                return responseGenerator.GenerateResponseMethod(500, "One or more validation error(s) occured", ex.Message.Split(Environment.NewLine));
+                return responseGenerator.GenerateResponseMethod(500, ex.Message, null);
             }
         }
 
@@ -116,18 +118,16 @@ namespace WebAPI.Controllers
         {
             try
             {
-                bool isSuccessful = await _mediatrSender.Send(new UpdateUserRequest(user));
-                if (isSuccessful) return responseGenerator.GenerateResponseMethod(200, "User fields updated", null);
-                else throw new ArgumentException("User does not exist");
-                throw new Exception();
+                await _mediatrSender.Send(new UpdateUserRequest(user));
+                return responseGenerator.GenerateResponseMethod(200, "User fields updated", null);
             }
-            catch (ArgumentException ex)
+            catch (ValidationException ex)
             {
-                return responseGenerator.GenerateResponseMethod(404, ex.Message, null);
+                return responseGenerator.GenerateResponseMethod(400, "One or more validation error(s) occured", ex.Message.Split(Environment.NewLine));
             }
             catch (Exception ex)
             {
-                return responseGenerator.GenerateResponseMethod(500, "One or more validation error(s) occured.", ex.Message.Split(Environment.NewLine));
+                return responseGenerator.GenerateResponseMethod(500, ex.Message, null);
             }
         }
 
@@ -142,9 +142,15 @@ namespace WebAPI.Controllers
         [Authorize]
         public async Task<GenericResponseModel> RemoveUser(Guid Id)
         {
-            bool isSuccessful = await _mediatrSender.Send(new DeleteUserRequest(Id));
-            if (isSuccessful) return responseGenerator.GenerateResponseMethod(200, "User deleted", null);
-            return responseGenerator.GenerateResponseMethod(404, "User does not exists", null);
+            try
+            {
+                await _mediatrSender.Send(new DeleteUserRequest(Id));
+                return responseGenerator.GenerateResponseMethod(200, "User deleted", null);
+            }
+            catch (Exception ex)
+            {
+                return responseGenerator.GenerateResponseMethod(404, ex.Message, null);
+            }
         }
     }
 }

@@ -37,17 +37,23 @@ namespace Application.Features.UserFeatures.Commands
 
         public async Task<UserDto> Handle(LoginUserRequest request, CancellationToken cancellationToken)
         {
-            User UserInDb = await _userRepo.UserLoginAsync(request.UserCredentials.UserEmail, request.UserCredentials.Password);
-            if (UserInDb != null)
+            try
             {
+                User UserInDb = await _userRepo.UserLoginAsync(request.UserCredentials.UserEmail, request.UserCredentials.Password);
+
                 UserDto UserDTO = _mapper.Map<UserDto>(UserInDb);
                 string BearerToken = await _userRepo.GenerateJWTToken(UserInDb);
 
                 UserDTO.PasswordLength = UserInDb.Password.Length;
                 UserDTO.BearerToken = BearerToken;
+                
                 return UserDTO;
             }
-            return null;
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }
