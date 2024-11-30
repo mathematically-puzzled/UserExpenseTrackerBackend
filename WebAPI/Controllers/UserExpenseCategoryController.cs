@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
         /// User expense categories along with the ones from Admin.
         /// </returns>
         [HttpPost("fetch")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<GenericResponseModel> GetUserExpenseCategory(Guid UserId)
         {
             try
@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="ExpCtg"></param>
         [HttpPost("add")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<GenericResponseModel> AddUserExpenseCategory(AddExpenseCategory ExpCtg)
         {
             try
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="Id"></param>
         [HttpDelete]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<GenericResponseModel> DeleteUserExpenseCategory(Guid Id)
         {
             try
