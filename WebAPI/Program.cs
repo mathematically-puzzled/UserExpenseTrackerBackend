@@ -25,6 +25,11 @@ builder.Services.AddSwaggerGen(c =>
         Title = "UserExpenseCategory",
         Version = "v1"
     });
+    c.SwaggerDoc("UserExpenseController", new OpenApiInfo
+    {
+        Title = "UserExpense",
+        Version = "v1"
+    });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "User Authentication",
@@ -56,6 +61,7 @@ if (app.Environment.IsDevelopment())
     {
         c.SwaggerEndpoint("/swagger/UserController/swagger.json", "UserController");
         c.SwaggerEndpoint("/swagger/UserExpenseCategoryController/swagger.json", "UserExpenseCategoryController");
+        c.SwaggerEndpoint("/swagger/UserExpenseController/swagger.json", "UserExpenseController");
     });
 }
 

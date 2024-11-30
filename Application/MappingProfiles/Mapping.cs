@@ -1,4 +1,5 @@
-﻿using Application.Models.ExpenseCategories;
+﻿using Application.Models.Expense;
+using Application.Models.ExpenseCategories;
 using Application.Models.Users;
 using AutoMapper;
 using Domain;
@@ -16,6 +17,8 @@ namespace Application.MappingProfiles
 
             CreateMap<ExpenseCategory, UserExpenseCategory>();
             CreateMap<AddExpenseCategory, ExpenseCategory>();
+
+            CreateMap<NewExpense, Expenses>();
         }
     }
 }

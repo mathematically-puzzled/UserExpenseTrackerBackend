@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("delete")]
         [Authorize]
         public async Task<GenericResponseModel> DeleteUserExpenseCategory(Guid Id)
         {
