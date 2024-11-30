@@ -15,9 +15,14 @@ builder.Services.AddScoped<GenericResponseMethod>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo
+    c.SwaggerDoc("UserController", new OpenApiInfo
     {
         Title = "UserExpenseTracker",
+        Version = "v1"
+    });
+    c.SwaggerDoc("UserExpenseCategoryController", new OpenApiInfo
+    {
+        Title = "UserExpenseCategory",
         Version = "v1"
     });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -47,7 +52,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/UserController/swagger.json", "UserController");
+        c.SwaggerEndpoint("/swagger/UserExpenseCategoryController/swagger.json", "UserExpenseCategoryController");
+    });
 }
 
 app.UseHttpsRedirection();

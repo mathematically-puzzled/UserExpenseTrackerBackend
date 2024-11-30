@@ -11,6 +11,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "UserController")]
     public class UserController : ControllerBase
     {
         private readonly ISender _mediatrSender;
@@ -45,7 +46,7 @@ namespace WebAPI.Controllers
             {
                 return responseGenerator.GenerateResponseMethod(400, "One or more validation error(s) occured", ex.Message.Split(Environment.NewLine));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return responseGenerator.GenerateResponseMethod(500, ex.Message, null);
             }

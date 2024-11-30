@@ -1,6 +1,6 @@
 ﻿namespace Domain
 {
-    public class ExpenseCategories
+    public class ExpenseCategory
     {
         public Guid Id { get; set; }
         public bool FromAdmin { get; set; }
