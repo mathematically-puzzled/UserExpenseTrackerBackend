@@ -23,16 +23,6 @@ namespace WebAPI.Controllers
             this.responseGenerator = responseGenerator;
         }
 
-        /// <summary>
-        /// Login function for the User.
-        /// </summary>
-        /// <param name="Credentials"></param>
-        /// <returns>
-        /// Updated User DTO with Auth Token valid for 120 Minutes
-        /// </returns>
-        /// <exception cref="Exception">
-        /// Validation Exception for Credentials
-        /// </exception>
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<GenericResponseModel> LoginUser(LoginUser Credentials)
@@ -52,14 +42,6 @@ namespace WebAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Password reset function for the User.
-        /// </summary>
-        /// <param name="UserCredentials"></param>
-        /// <returns>
-        /// Status code. 200 for Updated Records; 404 for User Credentials not found; 500 Validation Exceptions.
-        /// </returns>
-        /// <exception cref="ArgumentException"/>
         [HttpPost("forgor")]
         [AllowAnonymous]
         public async Task<GenericResponseModel> ForgotUserPassword(ForgotUser UserCredentials)
@@ -76,15 +58,6 @@ namespace WebAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Register user function for the User.
-        /// </summary>
-        /// <param name="newUser"></param>
-        /// <returns>
-        /// Status code. 200 for User Created; 500 for User Already Exists/Validation Exceptions.
-        /// </returns>
-        /// <exception cref="ArgumentException"/>
-        /// <exception cref="Exception"/>
         [HttpPost("add")]
         [AllowAnonymous]
         public async Task<GenericResponseModel> RegisterNewUser([FromBody] NewUser newUser)
@@ -104,15 +77,6 @@ namespace WebAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Update record function for the User.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns>
-        /// Status code. 200 for Record Updated; 404 for User not found; 500 for Validation Exceptions.
-        /// </returns>
-        /// <exception cref="ArgumentException"/>
-        /// <exception cref="Exception"/>
         [HttpPut("update")]
         [Authorize]
         public async Task<GenericResponseModel> UpdateUser([FromBody] UpdateUser user)
@@ -132,13 +96,6 @@ namespace WebAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Remove record function for the User.
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns>
-        /// Status code. 200 for User Deleted; 404 for User not found.
-        /// </returns>
         [HttpDelete("delete")]
         [Authorize]
         public async Task<GenericResponseModel> RemoveUser(Guid Id)

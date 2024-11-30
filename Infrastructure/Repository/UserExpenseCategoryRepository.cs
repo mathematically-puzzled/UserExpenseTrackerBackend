@@ -17,13 +17,6 @@ namespace Infrastructure.Repository
             _context = context;
         }
 
-        /// <summary>
-        /// Checks if there is an existing expense category then adds it if there isnt
-        /// </summary>
-        /// <param name="ExpenseCategory"></param>
-        /// <returns>
-        /// Exception if it exists.
-        /// </returns>
         public bool AddUserCategoryAsync(ExpenseCategory ExpenseCategory)
         {
             try
@@ -45,11 +38,6 @@ namespace Infrastructure.Repository
 
         }
 
-        /// <summary>
-        /// Deletes an Expense Category
-        /// </summary>
-        /// <param name="ExpenseType"></param>
-        /// <returns></returns>
         public async Task DeleteUserCategoryAsync(ExpenseCategory ExpenseType)
         {
             try
@@ -64,13 +52,6 @@ namespace Infrastructure.Repository
             }
         }
 
-        /// <summary>
-        /// Fetches an expense category by its GUID
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns>
-        /// Exception if the GUID Expense does not exist.
-        /// </returns>
         public async Task<ExpenseCategory> GetExpenseByIdASync(Guid Id)
         {
             try
@@ -87,11 +68,6 @@ namespace Infrastructure.Repository
             }
         }
 
-        /// <summary>
-        /// Fetches all expense categorie related to User.
-        /// </summary>
-        /// <param name="User"></param>
-        /// <returns></returns>
         public async Task<List<ExpenseCategory>> GetUserExpenseCategoriesAsync(User User)
         {
             try
