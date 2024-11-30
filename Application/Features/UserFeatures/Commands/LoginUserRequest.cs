@@ -7,9 +7,6 @@ using MediatR;
 
 namespace Application.Features.UserFeatures.Commands
 {
-    /// <summary>
-    /// Method to recieve Request and Initialize constructor.
-    /// </summary>
     public class LoginUserRequest : IRequest<UserDto>, IValidate
     {
         public LoginUser UserCredentials { get; set; }
@@ -20,10 +17,6 @@ namespace Application.Features.UserFeatures.Commands
         }
     }
 
-    /// <summary>
-    /// Maps UserCredentials over to User and calls the UserLoginAsyncToken that recieves the User
-    /// parameter if the Credentials match. Generates the Token if User param is not null.
-    /// </summary>
     public class LoginRequestHandler : IRequestHandler<LoginUserRequest, UserDto>
     {
         private readonly IUserAuthRepository _userRepo;
@@ -46,7 +39,7 @@ namespace Application.Features.UserFeatures.Commands
 
                 UserDTO.PasswordLength = UserInDb.Password.Length;
                 UserDTO.BearerToken = BearerToken;
-                
+
                 return UserDTO;
             }
             catch (Exception)

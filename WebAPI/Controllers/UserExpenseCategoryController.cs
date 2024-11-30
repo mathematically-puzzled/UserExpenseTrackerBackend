@@ -23,13 +23,6 @@ namespace WebAPI.Controllers
             _mediatrSender = mediatrSender;
         }
 
-        /// <summary>
-        /// Fetch User Expense Categories.
-        /// </summary>
-        /// <param name="UserId"></param>
-        /// <returns>
-        /// User expense categories along with the ones from Admin.
-        /// </returns>
         [HttpPost("fetch")]
         [Authorize]
         public async Task<GenericResponseModel> GetUserExpenseCategory(Guid UserId)
@@ -45,10 +38,6 @@ namespace WebAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Method to add a new expense category.
-        /// </summary>
-        /// <param name="ExpCtg"></param>
         [HttpPost("add")]
         [Authorize]
         public async Task<GenericResponseModel> AddUserExpenseCategory(AddExpenseCategory ExpCtg)
@@ -64,10 +53,6 @@ namespace WebAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Method to delete an expense category
-        /// </summary>
-        /// <param name="Id"></param>
         [HttpDelete]
         [Authorize]
         public async Task<GenericResponseModel> DeleteUserExpenseCategory(Guid Id)

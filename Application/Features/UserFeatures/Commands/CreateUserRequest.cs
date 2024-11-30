@@ -7,9 +7,6 @@ using MediatR;
 
 namespace Application.Features.UserFeatures.Commands
 {
-    /// <summary>
-    /// Method to recieve Request and Initialize constructor.
-    /// </summary>
     public class CreateUserRequest : IRequest<bool>, IValidate
     {
         public NewUser UserRequest { get; set; }
@@ -20,11 +17,6 @@ namespace Application.Features.UserFeatures.Commands
         }
     }
 
-    /// <summary>
-    /// Maps UserRequest Param over User inside Db to create new Record.
-    /// DateTime rights are not given for the User to be updated since it can
-    /// be manipulated. Has IValidate interface,Pipeline Validate behaviour is expected here.
-    /// </summary>
     public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, bool>
     {
         private readonly IUserAuthRepository _userAuthRepo;
