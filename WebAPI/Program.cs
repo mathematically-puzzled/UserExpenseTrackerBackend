@@ -15,6 +15,11 @@ builder.Services.AddScoped<GenericResponseMethod>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
+    c.SwaggerDoc("TokenController", new OpenApiInfo
+    {
+        Title = "ControllerToken",
+        Version = "v1",
+    });
     c.SwaggerDoc("UserController", new OpenApiInfo
     {
         Title = "UserExpenseTracker",
@@ -59,6 +64,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
+        c.SwaggerEndpoint("/swagger/TokenController/swagger.json", "TokenController");
         c.SwaggerEndpoint("/swagger/UserController/swagger.json", "UserController");
         c.SwaggerEndpoint("/swagger/UserExpenseCategoryController/swagger.json", "UserExpenseCategoryController");
         c.SwaggerEndpoint("/swagger/UserExpenseController/swagger.json", "UserExpenseController");

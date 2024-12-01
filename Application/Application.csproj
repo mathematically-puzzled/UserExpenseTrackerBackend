@@ -23,7 +23,6 @@
   <ItemGroup>
     <Folder Include="Features\ExpenseCategoryFeatures\Validations\" />
     <Folder Include="Features\ExpenseFeatures\Valdiations\" />
-    <Folder Include="Features\UserFeatures\Queries\" />
   </ItemGroup>
 
 </Project>
