@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<GenericResponseModel> AddNewExpense(NewExpense UserExpense)
         {
             try
@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("delete")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<GenericResponseModel> DeleteExpense(Guid ExpenseId)
         {
             try
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<GenericResponseModel> UpdateExpense(UpdateExpense UpdateExpense)
         {
             try
