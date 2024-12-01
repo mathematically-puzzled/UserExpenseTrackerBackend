@@ -53,10 +53,11 @@ namespace Infrastructure.Repository
                     .Where(ex => ex.User.Id == RequestModel.UserId)
                     .ToListAsync();
                 if (UserExpenses.Count == 0) throw new Exception("No Expense History Available for requested User");
-                if (RequestModel.StartDate != "" && RequestModel.EndDate != "")
+                if (RequestModel.StartDate != null && RequestModel.EndDate != null)
                 {
-                    UserExpenses = UserExpenses.Where(ex => ex.ExpenseDate >= DateTime.Parse(RequestModel.StartDate)
-                    && ex.ExpenseDate <= DateTime.Parse(RequestModel.StartDate)).ToList();
+                    if (RequestModel.StartDate > RequestModel.EndDate) throw new Exception("Incorrect format of DateRange provided");
+                    UserExpenses = UserExpenses.Where(ex => ex.ExpenseDate >= RequestModel.StartDate
+                    && ex.ExpenseDate <= RequestModel.EndDate).ToList();
                     if (UserExpenses.Count == 0) throw new Exception("No data available in given Time Range");
                 }
                 if (RequestModel.ExpenseType.Count != 0)
